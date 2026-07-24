@@ -1,0 +1,2453 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dominic De Jesus — Portfolio</title>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500;700;900&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      :root {
+        --black: #0a0a0a;
+        --white: #f5f0e8;
+        --yellow: #ffe500;
+        --orange: #ff5c00;
+        --blue: #1919ff;
+        --pink: #ff2d78;
+        --border: 3px solid var(--black);
+        --shadow: 6px 6px 0 var(--black);
+        --shadow-lg: 10px 10px 0 var(--black);
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        background: var(--white);
+        color: var(--black);
+        font-family: "DM Sans", sans-serif;
+        overflow-x: hidden;
+        cursor: none;
+      }
+
+      /* ── CUSTOM CURSOR ── */
+      .cursor {
+        width: 18px;
+        height: 18px;
+        background: var(--yellow);
+        border: 2px solid var(--black);
+        border-radius: 50%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        pointer-events: none;
+        z-index: 99999;
+        transform: translate(-50%, -50%);
+        transition:
+          transform 0.08s,
+          width 0.15s,
+          height 0.15s,
+          background 0.15s;
+      }
+      .cursor.big {
+        width: 44px;
+        height: 44px;
+        background: var(--orange);
+        border-radius: 50%;
+      }
+
+      /* ── NOISE OVERLAY ── */
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+        pointer-events: none;
+        z-index: 9998;
+      }
+
+      /* ── MARQUEE ── */
+      .marquee-wrap {
+        background: var(--yellow);
+        border-top: var(--border);
+        border-bottom: var(--border);
+        overflow: hidden;
+        white-space: nowrap;
+        padding: 10px 0;
+      }
+      .marquee-inner {
+        display: inline-block;
+        animation: marquee 18s linear infinite;
+      }
+      .marquee-inner span {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 1.4rem;
+        letter-spacing: 0.08em;
+        margin: 0 32px;
+      }
+      @keyframes marquee {
+        from {
+          transform: translateX(0);
+        }
+        to {
+          transform: translateX(-50%);
+        }
+      }
+
+      /* ── NAV ── */
+      nav {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: var(--black);
+        border-bottom: var(--border);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 40px;
+        height: 64px;
+      }
+      .nav-logo {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 1.8rem;
+        color: var(--yellow);
+        letter-spacing: 0.05em;
+        text-decoration: none;
+      }
+      .nav-links {
+        display: flex;
+        gap: 0;
+      }
+      .nav-links a {
+        color: var(--white);
+        text-decoration: none;
+        font-family: "Space Mono", monospace;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        padding: 0 20px;
+        height: 64px;
+        display: flex;
+        align-items: center;
+        border-left: 1px solid rgba(255, 255, 255, 0.1);
+        transition:
+          background 0.15s,
+          color 0.15s;
+      }
+      .nav-links a:hover {
+        background: var(--yellow);
+        color: var(--black);
+      }
+      .nav-cta {
+        background: var(--orange);
+        color: var(--white) !important;
+        border-left: var(--border) !important;
+        font-weight: 700;
+      }
+      .nav-cta:hover {
+        background: var(--pink) !important;
+        color: var(--white) !important;
+      }
+
+      /* ── HERO ── */
+      .hero {
+        min-height: calc(100vh - 64px);
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        border-bottom: var(--border);
+      }
+      .hero-left {
+        padding: 80px 60px;
+        border-right: var(--border);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+      }
+      .hero-left::before {
+        content: "";
+        position: absolute;
+        width: 400px;
+        height: 400px;
+        background: var(--yellow);
+        border-radius: 50%;
+        top: -100px;
+        right: -100px;
+        z-index: 0;
+      }
+      .hero-tag {
+        font-family: "Space Mono", monospace;
+        font-size: 0.72rem;
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+        background: var(--black);
+        color: var(--yellow);
+        display: inline-block;
+        padding: 6px 14px;
+        margin-bottom: 24px;
+        position: relative;
+        z-index: 1;
+      }
+      .hero-name {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: clamp(5rem, 10vw, 9rem);
+        line-height: 0.9;
+        position: relative;
+        z-index: 1;
+        color: var(--black);
+      }
+      .hero-name .line2 {
+        color: var(--orange);
+      }
+      .hero-desc {
+        font-size: 1.05rem;
+        line-height: 1.65;
+        margin-top: 28px;
+        max-width: 420px;
+        position: relative;
+        z-index: 1;
+        font-weight: 400;
+      }
+      .hero-badges {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 32px;
+        position: relative;
+        z-index: 1;
+      }
+      .badge {
+        border: var(--border);
+        padding: 8px 16px;
+        font-family: "Space Mono", monospace;
+        font-size: 0.72rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        font-weight: 700;
+        box-shadow: var(--shadow);
+        transition:
+          transform 0.1s,
+          box-shadow 0.1s;
+        cursor: default;
+      }
+      .badge:hover {
+        transform: translate(-2px, -2px);
+        box-shadow: var(--shadow-lg);
+      }
+      .badge-yellow {
+        background: var(--yellow);
+      }
+      .badge-orange {
+        background: var(--orange);
+        color: var(--white);
+      }
+      .badge-blue {
+        background: var(--blue);
+        color: var(--white);
+      }
+      .badge-pink {
+        background: var(--pink);
+        color: var(--white);
+      }
+
+      .hero-ctas {
+        display: flex;
+        gap: 14px;
+        margin-top: 40px;
+        position: relative;
+        z-index: 1;
+      }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 14px 28px;
+        font-family: "Space Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        text-decoration: none;
+        border: var(--border);
+        box-shadow: var(--shadow);
+        transition:
+          transform 0.12s,
+          box-shadow 0.12s;
+        cursor: none;
+      }
+      .btn:hover {
+        transform: translate(-3px, -3px);
+        box-shadow: var(--shadow-lg);
+      }
+      .btn-primary {
+        background: var(--black);
+        color: var(--yellow);
+      }
+      .btn-secondary {
+        background: var(--white);
+        color: var(--black);
+      }
+
+      .hero-right {
+        background: var(--black);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+        padding: 60px;
+      }
+      .hero-right::before {
+        content: "DOM";
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 28vw;
+        color: rgba(255, 229, 0, 0.07);
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        white-space: nowrap;
+        pointer-events: none;
+      }
+      .hero-card {
+        background: var(--white);
+        border: var(--border);
+        box-shadow: var(--shadow-lg);
+        padding: 32px;
+        max-width: 340px;
+        width: 100%;
+        position: relative;
+        z-index: 1;
+        animation: float 4s ease-in-out infinite;
+      }
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+      }
+      .card-avatar {
+        width: 80px;
+        height: 80px;
+        background: var(--yellow);
+        border: var(--border);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 2rem;
+        margin-bottom: 16px;
+      }
+      .card-role {
+        font-family: "Space Mono", monospace;
+        font-size: 0.68rem;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        background: var(--orange);
+        color: var(--white);
+        display: inline-block;
+        padding: 4px 10px;
+        margin-bottom: 12px;
+      }
+      .card-name {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 1.8rem;
+        letter-spacing: 0.04em;
+        line-height: 1;
+        margin-bottom: 16px;
+      }
+      .card-stats {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        margin-top: 20px;
+      }
+      .stat-box {
+        border: var(--border);
+        padding: 12px;
+        text-align: center;
+        background: var(--yellow);
+      }
+      .stat-num {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 2rem;
+        line-height: 1;
+      }
+      .stat-label {
+        font-family: "Space Mono", monospace;
+        font-size: 0.6rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-top: 2px;
+      }
+
+      /* ── SECTION HEADERS ── */
+      .section-header {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        margin-bottom: 48px;
+      }
+      .section-num {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 1rem;
+        background: var(--black);
+        color: var(--yellow);
+        padding: 4px 12px;
+        letter-spacing: 0.1em;
+      }
+      .section-title {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: clamp(2.8rem, 5vw, 4.5rem);
+        line-height: 1;
+        letter-spacing: 0.02em;
+      }
+      .section-line {
+        flex: 1;
+        height: 3px;
+        background: var(--black);
+      }
+
+      /* ── ABOUT ── */
+      .about {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        border-bottom: var(--border);
+      }
+      .about-left {
+        padding: 80px 60px;
+        border-right: var(--border);
+      }
+      .about-text {
+        font-size: 1.1rem;
+        line-height: 1.7;
+        margin-bottom: 24px;
+      }
+      .about-right {
+        padding: 80px 60px;
+        background: var(--black);
+        color: var(--white);
+      }
+      .skills-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        margin-top: 32px;
+      }
+      .skill-item {
+        border: 2px solid rgba(255, 255, 255, 0.2);
+        padding: 16px;
+        position: relative;
+        transition: border-color 0.2s;
+      }
+      .skill-item:hover {
+        border-color: var(--yellow);
+      }
+      .skill-name {
+        font-family: "Space Mono", monospace;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--yellow);
+        margin-bottom: 6px;
+      }
+      .skill-bar {
+        height: 4px;
+        background: rgba(255, 255, 255, 0.1);
+        margin-top: 10px;
+      }
+      .skill-fill {
+        height: 100%;
+        background: var(--yellow);
+        transition: width 1.2s ease;
+      }
+
+      /* ── PROJECTS ── */
+      .projects {
+        padding: 80px 60px;
+        border-bottom: var(--border);
+        font-family: "IBM Plex Sans", sans-serif;
+      }
+      .projects-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0;
+        border: var(--border);
+      }
+      .project-card {
+        border-right: var(--border);
+        padding: 32px;
+        transition: background 0.15s;
+        position: relative;
+        overflow: hidden;
+      }
+      .project-card:last-child {
+        border-right: none;
+      }
+      .project-card:nth-child(n + 4) {
+        border-top: var(--border);
+      }
+      .project-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: var(--yellow);
+        transform: translateY(100%);
+        transition: transform 0.25s ease;
+        z-index: 0;
+      }
+      .project-card:hover::before {
+        transform: translateY(0);
+      }
+      .project-card > * {
+        position: relative;
+        z-index: 1;
+      }
+
+      .project-num {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 3rem;
+        color: rgba(0, 0, 0, 0.08);
+        position: absolute;
+        top: 16px;
+        right: 20px;
+        z-index: 0;
+      }
+      .project-type {
+        font-family: "Space Mono", monospace;
+        font-size: 0.65rem;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: var(--orange);
+        margin-bottom: 10px;
+        font-weight: 700;
+      }
+      .project-title {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 1.8rem;
+        letter-spacing: 0.03em;
+        line-height: 1.1;
+        margin-bottom: 12px;
+      }
+      .project-desc {
+        font-size: 0.88rem;
+        line-height: 1.6;
+        color: #444;
+        margin-bottom: 20px;
+      }
+      .project-card:hover .project-desc {
+        color: var(--black);
+      }
+      .project-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        margin-bottom: 24px;
+      }
+      .tag {
+        font-family: "Space Mono", monospace;
+        font-size: 0.62rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        border: 2px solid var(--black);
+        padding: 3px 8px;
+        font-weight: 700;
+      }
+      .project-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-family: "Space Mono", monospace;
+        font-size: 0.72rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        text-decoration: none;
+        color: var(--black);
+        font-weight: 700;
+        border-bottom: 2px solid var(--black);
+        padding-bottom: 2px;
+        transition: gap 0.15s;
+      }
+      .project-link:hover {
+        gap: 14px;
+      }
+      .project-status {
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        background: #00cc66;
+        border-radius: 50%;
+        margin-right: 6px;
+        animation: pulse 2s infinite;
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.4;
+        }
+      }
+
+      /* ── GRAPHIC DESIGN ── */
+      .graphic {
+        padding: 80px 60px;
+        border-bottom: var(--border);
+        background: var(--black);
+        color: var(--white);
+      }
+      .graphic .section-title {
+        color: var(--white);
+      }
+      .graphic .section-line {
+        background: var(--yellow);
+      }
+      .graphic .section-num {
+        background: var(--yellow);
+        color: var(--black);
+      }
+
+      .design-tabs {
+        display: flex;
+        gap: 0;
+        margin-bottom: 40px;
+        border: var(--border);
+        border-color: rgba(255, 255, 255, 0.3);
+        overflow: hidden;
+      }
+      .design-tab {
+        flex: 1;
+        padding: 14px 20px;
+        font-family: "Space Mono", monospace;
+        font-size: 0.72rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        border: none;
+        cursor: none;
+        background: transparent;
+        color: rgba(255, 255, 255, 0.5);
+        border-right: 1px solid rgba(255, 255, 255, 0.2);
+        transition:
+          background 0.15s,
+          color 0.15s;
+      }
+      .design-tab:last-child {
+        border-right: none;
+      }
+      .design-tab.active,
+      .design-tab:hover {
+        background: var(--yellow);
+        color: var(--black);
+      }
+
+      .design-gallery {
+        display: none;
+      }
+      .design-gallery.active {
+        display: grid;
+      }
+
+      .gallery-sports {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 0;
+        border: 2px solid rgba(255, 255, 255, 0.2);
+      }
+      .gallery-esports {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 0;
+        border: 2px solid rgba(255, 255, 255, 0.2);
+      }
+      .gallery-brands {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 0;
+        border: 2px solid rgba(255, 255, 255, 0.2);
+      }
+      .gallery-ui {
+        grid-template-columns: 1fr 1fr;
+        gap: 0;
+        border: 2px solid rgba(255, 255, 255, 0.2);
+      }
+      .gallery-carousels {
+        grid-template-columns: 1fr 1fr;
+        gap: 0;
+        border: 2px solid rgba(255, 255, 255, 0.2);
+      }
+
+      .gal-item {
+        position: relative;
+        overflow: hidden;
+        border-right: 1px solid rgba(255, 255, 255, 0.15);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+        aspect-ratio: 3/4;
+        cursor: none;
+      }
+      .gal-item-wide {
+        aspect-ratio: 16/9;
+      }
+      .gal-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.4s ease;
+        display: block;
+      }
+      .gal-item:hover img {
+        transform: scale(1.06);
+      }
+      .gal-overlay {
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.7);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: opacity 0.25s;
+        padding: 16px;
+        text-align: center;
+      }
+      .gal-item:hover .gal-overlay {
+        opacity: 1;
+      }
+      .gal-overlay-title {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 1.4rem;
+        color: var(--yellow);
+        letter-spacing: 0.05em;
+      }
+      .gal-overlay-type {
+        font-family: "Space Mono", monospace;
+        font-size: 0.62rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: rgba(255, 255, 255, 0.7);
+        margin-top: 6px;
+      }
+
+      /* Lightbox */
+      .lightbox {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.92);
+        z-index: 10000;
+        display: none;
+        align-items: center;
+        justify-content: center;
+      }
+      .lightbox.open {
+        display: flex;
+      }
+      .lightbox img {
+        max-width: 90vw;
+        max-height: 90vh;
+        border: var(--border);
+        box-shadow: 12px 12px 0 var(--yellow);
+      }
+      .lightbox-close {
+        position: absolute;
+        top: 24px;
+        right: 32px;
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 3rem;
+        color: var(--yellow);
+        cursor: none;
+      }
+
+      /* ── CONTACT ── */
+      .contact {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        border-bottom: var(--border);
+      }
+      .contact-left {
+        padding: 80px 60px;
+        border-right: var(--border);
+        background: var(--orange);
+      }
+      .contact-left .section-title {
+        color: var(--white);
+      }
+      .contact-left .section-line {
+        background: var(--white);
+      }
+      .contact-left .section-num {
+        background: var(--white);
+        color: var(--orange);
+      }
+      .contact-big {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: clamp(3rem, 6vw, 5.5rem);
+        line-height: 1;
+        color: var(--white);
+        margin-bottom: 32px;
+      }
+      .contact-links {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+      .contact-link {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        text-decoration: none;
+        color: var(--white);
+        border: 2px solid rgba(255, 255, 255, 0.4);
+        padding: 18px 24px;
+        font-family: "Space Mono", monospace;
+        font-size: 0.8rem;
+        letter-spacing: 0.08em;
+        transition:
+          background 0.15s,
+          border-color 0.15s;
+      }
+      .contact-link:hover {
+        background: var(--white);
+        color: var(--orange);
+        border-color: var(--white);
+      }
+      .contact-icon {
+        font-size: 1.4rem;
+      }
+
+      .contact-right {
+        padding: 80px 60px;
+      }
+      .contact-right .section-title {
+        color: var(--black);
+      }
+      .contact-form {
+        margin-top: 32px;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .form-label {
+        font-family: "Space Mono", monospace;
+        font-size: 0.68rem;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        font-weight: 700;
+      }
+      .form-input,
+      .form-textarea {
+        border: var(--border);
+        padding: 14px 16px;
+        font-family: "DM Sans", sans-serif;
+        font-size: 0.95rem;
+        background: var(--white);
+        outline: none;
+        transition: box-shadow 0.15s;
+        resize: none;
+      }
+      .form-input:focus,
+      .form-textarea:focus {
+        box-shadow: var(--shadow);
+      }
+      .form-textarea {
+        height: 120px;
+      }
+
+      /* ── FOOTER ── */
+      footer {
+        background: var(--black);
+        padding: 40px 60px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .footer-logo {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 2.4rem;
+        color: var(--yellow);
+        letter-spacing: 0.04em;
+      }
+      .footer-copy {
+        font-family: "Space Mono", monospace;
+        font-size: 0.68rem;
+        color: rgba(255, 255, 255, 0.4);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+      }
+      .footer-heart {
+        color: var(--orange);
+      }
+
+      /* ── SCROLL REVEAL ── */
+      .reveal {
+        opacity: 0;
+        transform: translateY(30px);
+        transition:
+          opacity 0.6s ease,
+          transform 0.6s ease;
+      }
+      .reveal.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* ── CERTIFICATES ── */
+      .certs-section {
+        padding: 80px 60px;
+        border-bottom: var(--border);
+        background: var(--white);
+        font-family: "IBM Plex Sans", sans-serif;
+      }
+      .certs-sub {
+        font-family: "Space Mono", monospace;
+        font-size: 0.78rem;
+        color: #666;
+        letter-spacing: 0.05em;
+        margin-bottom: 44px;
+        max-width: 560px;
+      }
+      .certs-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0;
+        border: var(--border);
+      }
+      .cert-card {
+        display: flex;
+        flex-direction: column;
+        border-right: var(--border);
+        cursor: none;
+        transition: background 0.15s;
+        position: relative;
+        overflow: hidden;
+      }
+      .cert-card:last-child {
+        border-right: none;
+      }
+      .cert-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: var(--yellow);
+        transform: translateY(100%);
+        transition: transform 0.25s ease;
+        z-index: 0;
+      }
+      .cert-card:hover::before {
+        transform: translateY(0);
+      }
+      .cert-card > * {
+        position: relative;
+        z-index: 1;
+      }
+
+      .cert-logo-block {
+        padding: 32px 32px 24px;
+        border-bottom: var(--border);
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+      .cert-logo-oracle {
+        background: var(--black);
+      }
+      .cert-logo-sap {
+        background: #0070c0;
+      }
+      .cert-logo-text {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 2.6rem;
+        color: var(--white);
+        letter-spacing: 0.08em;
+        line-height: 1;
+      }
+      .cert-logo-oracle .cert-logo-text {
+        color: #f80000;
+      }
+      .cert-logo-sub {
+        font-family: "Space Mono", monospace;
+        font-size: 0.65rem;
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+        color: rgba(255, 255, 255, 0.65);
+      }
+      .cert-body {
+        padding: 28px 32px 32px;
+      }
+      .cert-issuer {
+        font-family: "Space Mono", monospace;
+        font-size: 0.65rem;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: var(--orange);
+        font-weight: 700;
+        margin-bottom: 8px;
+      }
+      .cert-title {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 1.7rem;
+        letter-spacing: 0.03em;
+        line-height: 1.1;
+        margin-bottom: 14px;
+      }
+      .cert-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 16px;
+      }
+      .cert-date,
+      .cert-type {
+        font-family: "Space Mono", monospace;
+        font-size: 0.62rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        border: 2px solid var(--black);
+        padding: 4px 10px;
+        font-weight: 700;
+      }
+      .cert-date {
+        background: var(--yellow);
+      }
+      .cert-type {
+        background: var(--white);
+      }
+      .cert-desc {
+        font-size: 0.85rem;
+        line-height: 1.65;
+        color: #555;
+        margin-bottom: 24px;
+      }
+      .cert-card:hover .cert-desc {
+        color: var(--black);
+      }
+      .cert-cta {
+        font-family: "Space Mono", monospace;
+        font-size: 0.72rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        font-weight: 700;
+        border-bottom: 2px solid var(--black);
+        display: inline-block;
+        padding-bottom: 2px;
+      }
+
+      /* ── CERT MODAL ── */
+      .cert-modal {
+        position: fixed;
+        inset: 0;
+        z-index: 20000;
+        display: none;
+        align-items: center;
+        justify-content: center;
+      }
+      .cert-modal.open {
+        display: flex;
+      }
+      .cert-modal-backdrop {
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.88);
+      }
+      .cert-modal-box {
+        position: relative;
+        z-index: 1;
+        background: var(--white);
+        border: var(--border);
+        box-shadow: 12px 12px 0 var(--black);
+        width: min(90vw, 820px);
+        max-height: 90vh;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+      }
+      .cert-modal-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 16px 24px;
+        border-bottom: var(--border);
+        background: var(--black);
+      }
+      .cert-modal-title {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 1.2rem;
+        color: var(--yellow);
+        letter-spacing: 0.05em;
+      }
+      .cert-modal-close {
+        background: none;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        color: var(--white);
+        font-size: 1rem;
+        padding: 4px 10px;
+        cursor: none;
+        font-family: "Space Mono", monospace;
+        transition: background 0.15s;
+      }
+      .cert-modal-close:hover {
+        background: var(--orange);
+        border-color: var(--orange);
+      }
+      .cert-modal-frame {
+        flex: 1;
+        border: none;
+        min-height: 500px;
+      }
+      .cert-modal-footer {
+        padding: 16px 24px;
+        border-top: var(--border);
+        display: flex;
+        justify-content: flex-end;
+        background: var(--white);
+      }
+
+      /* ── RESPONSIVE ── */
+      @media (max-width: 900px) {
+        nav {
+          padding: 0 20px;
+        }
+        .nav-links {
+          display: none;
+        }
+        .hero {
+          grid-template-columns: 1fr;
+          min-height: auto;
+        }
+        .hero-right {
+          display: none;
+        }
+        .hero-left {
+          padding: 60px 24px;
+        }
+        .about {
+          grid-template-columns: 1fr;
+        }
+        .about-left,
+        .about-right {
+          padding: 48px 24px;
+        }
+        .about-left {
+          border-right: none;
+          border-bottom: var(--border);
+        }
+        .projects {
+          padding: 60px 24px;
+        }
+        .projects-grid {
+          grid-template-columns: 1fr;
+        }
+        .project-card {
+          border-right: none;
+          border-bottom: var(--border);
+        }
+        .project-card:last-child {
+          border-bottom: none;
+        }
+        .graphic {
+          padding: 60px 24px;
+        }
+        .gallery-sports,
+        .gallery-esports,
+        .gallery-brands {
+          grid-template-columns: 1fr 1fr;
+        }
+        .contact {
+          grid-template-columns: 1fr;
+        }
+        .contact-left {
+          border-right: none;
+          border-bottom: var(--border);
+        }
+        .contact-left,
+        .contact-right {
+          padding: 60px 24px;
+        }
+        footer {
+          flex-direction: column;
+          gap: 12px;
+          text-align: center;
+          padding: 32px 24px;
+        }
+        .certs-section {
+          padding: 60px 24px;
+        }
+        .certs-grid {
+          grid-template-columns: 1fr;
+        }
+        .cert-card {
+          border-right: none;
+          border-bottom: var(--border);
+        }
+        .cert-card:last-child {
+          border-bottom: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Custom Cursor -->
+    <div class="cursor" id="cursor"></div>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+      <div class="lightbox-close" id="lightboxClose">✕</div>
+      <img src="" id="lightboxImg" alt="" />
+    </div>
+
+    <!-- NAV -->
+    <nav>
+      <a href="#" class="nav-logo">DOM.DEV</a>
+      <div class="nav-links">
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <a href="#design">Design</a>
+        <a href="#certificates">Certs</a>
+        <a href="#contact" class="nav-cta">Hire Me →</a>
+      </div>
+    </nav>
+
+    <!-- MARQUEE -->
+    <div class="marquee-wrap">
+      <div class="marquee-inner">
+        <span>Web Developer</span><span>✦</span> <span>UI/UX Designer</span
+        ><span>✦</span> <span>Graphic Designer</span><span>✦</span>
+        <span>Virtual Assistant</span><span>✦</span> <span>Alpine.js</span
+        ><span>✦</span> <span>Mithril.js</span><span>✦</span>
+        <span>Open to Work</span><span>✦</span> <span>Based in PH</span
+        ><span>✦</span>
+        <!-- dupe for seamless loop -->
+        <span>Web Developer</span><span>✦</span> <span>UI/UX Designer</span
+        ><span>✦</span> <span>Graphic Designer</span><span>✦</span>
+        <span>Virtual Assistant</span><span>✦</span> <span>Alpine.js</span
+        ><span>✦</span> <span>Mithril.js</span><span>✦</span>
+        <span>Open to Work</span><span>✦</span> <span>Based in PH</span
+        ><span>✦</span>
+      </div>
+    </div>
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-left">
+        <span class="hero-tag">Available for freelance 🟢</span>
+        <h1 class="hero-name">
+          <div>DOMINIC</div>
+          <div class="line2">DE JESUS</div>
+        </h1>
+        <p class="hero-desc">
+          I'm an IT student and Virtual Assistant who brings a lot more to the
+          table than you'd expect. Need a landing page? I'll build it. A social
+          media graphic? Consider it done. A cleaner UI for your app? That's my
+          thing too. I combine the reliability of a VA with the technical skills
+          of someone who actually studies this stuff every day.
+        </p>
+        <div class="hero-badges">
+          <span class="badge badge-yellow">Alpine.js</span>
+          <span class="badge badge-orange">Firebase</span>
+          <span class="badge badge-blue">Mithril.js</span>
+          <span class="badge badge-pink">Flutter</span>
+          <span class="badge badge-yellow">HTML/CSS/JS</span>
+          <span class="badge">Figma</span>
+        </div>
+        <div class="hero-ctas">
+          <a href="#projects" class="btn btn-primary">View Projects →</a>
+          <a href="#contact" class="btn btn-secondary">Get in Touch</a>
+        </div>
+      </div>
+      <div class="hero-right">
+        <div class="hero-card">
+          <div class="card-avatar">DJ</div>
+          <div class="card-role">Web Developer | Virtual Asst.</div>
+          <div class="card-name">Dominic De Jesus</div>
+          <div style="font-size: 0.85rem; line-height: 1.5; color: #555">
+            STI College Philippines<br />
+            Calumpit / Hagonoy, Bulacan<br />
+            <span
+              style="
+                font-family: &quot;Space Mono&quot;, monospace;
+                font-size: 0.7rem;
+                color: var(--orange);
+              "
+              >Oracle Academy • SAP S/4HANA</span
+            >
+          </div>
+          <div class="card-stats">
+            <div class="stat-box">
+              <div class="stat-num">6+</div>
+              <div class="stat-label">Projects Built</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-num">3+</div>
+              <div class="stat-label">Live Deploys</div>
+            </div>
+            <div
+              class="stat-box"
+              style="background: var(--orange); color: var(--white)"
+            >
+              <div class="stat-num">2</div>
+              <div class="stat-label">Certificates</div>
+            </div>
+            <div
+              class="stat-box"
+              style="background: var(--blue); color: var(--white)"
+            >
+              <div class="stat-num">∞</div>
+              <div class="stat-label">Ideas</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="about" id="about">
+      <div class="about-left reveal">
+        <div class="section-header">
+          <span class="section-num">01</span>
+          <h2 class="section-title">ABOUT</h2>
+          <div class="section-line"></div>
+        </div>
+        <p class="about-text">
+          I'm a CS/IT student at <strong>STI College Philippines</strong>,
+          passionate about building practical web apps for local communities. My
+          projects mostly tackle real barangay-level problems — resident
+          management, library systems, and public transport tracking.
+        </p>
+        <p class="about-text">
+          Beyond code, I do graphic design — sports edits, esports posters,
+          product mockups, and UI mockups. I believe design and development go
+          hand-in-hand, and I try to bring that aesthetic sensibility to every
+          project I ship.
+        </p>
+        <p class="about-text">
+          I hold certificates from <strong>Oracle Academy</strong> (Java
+          Fundamentals) and <strong>SAP</strong> (S/4HANA), and I'm always
+          hunting for the next project that lets me build something genuinely
+          useful.
+        </p>
+        <div
+          style="margin-top: 32px; display: flex; gap: 12px; flex-wrap: wrap"
+        >
+          <a
+            href="mailto:dominicdechut@gmail.com"
+            class="btn btn-primary"
+            style="font-size: 0.7rem; padding: 12px 20px"
+            >📧 Email Me</a
+          >
+          <a
+            href="https://github.com/"
+            target="_blank"
+            class="btn btn-secondary"
+            style="font-size: 0.7rem; padding: 12px 20px"
+            >⌨ GitHub</a
+          >
+        </div>
+      </div>
+      <div class="about-right reveal">
+        <div class="section-header">
+          <span
+            class="section-num"
+            style="background: var(--yellow); color: var(--black)"
+            >02</span
+          >
+          <h2 class="section-title" style="color: var(--white)">SKILLS</h2>
+          <div
+            class="section-line"
+            style="background: rgba(255, 255, 255, 0.3)"
+          ></div>
+        </div>
+        <div class="skills-grid">
+          <div class="skill-item">
+            <div class="skill-name">Alpine.js</div>
+            <div style="font-size: 0.8rem; color: rgba(255, 255, 255, 0.6)">
+              Primary framework
+            </div>
+            <div class="skill-bar">
+              <div class="skill-fill" style="width: 90%"></div>
+            </div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-name">Firebase</div>
+            <div style="font-size: 0.8rem; color: rgba(255, 255, 255, 0.6)">
+              Firestore + Auth
+            </div>
+            <div class="skill-bar">
+              <div class="skill-fill" style="width: 88%"></div>
+            </div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-name">HTML/CSS/JS</div>
+            <div style="font-size: 0.8rem; color: rgba(255, 255, 255, 0.6)">
+              Core foundation
+            </div>
+            <div class="skill-bar">
+              <div class="skill-fill" style="width: 95%"></div>
+            </div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-name">Mithril.js</div>
+            <div style="font-size: 0.8rem; color: rgba(255, 255, 255, 0.6)">
+              SPA development
+            </div>
+            <div class="skill-bar">
+              <div class="skill-fill" style="width: 75%"></div>
+            </div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-name">Graphic Design</div>
+            <div style="font-size: 0.8rem; color: rgba(255, 255, 255, 0.6)">
+              Canva
+            </div>
+            <div class="skill-bar">
+              <div class="skill-fill" style="width: 80%"></div>
+            </div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-name">UI/UX</div>
+            <div style="font-size: 0.8rem; color: rgba(255, 255, 255, 0.6)">
+              Figma / design
+            </div>
+            <div class="skill-bar">
+              <div class="skill-fill" style="width: 82%"></div>
+            </div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-name">Java</div>
+            <div style="font-size: 0.8rem; color: rgba(255, 255, 255, 0.6)">
+              Oracle certified
+            </div>
+            <div class="skill-bar">
+              <div class="skill-fill" style="width: 65%"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section class="projects" id="projects">
+      <div class="section-header reveal">
+        <span class="section-num">03</span>
+        <h2 class="section-title">PROJECTS</h2>
+        <div class="section-line"></div>
+      </div>
+
+      <div class="projects-grid reveal">
+        <!-- Dumpsterr -->
+        <div class="project-card">
+          <div class="project-num">01</div>
+          <div class="project-type">
+            <span class="project-status"></span>Live · Web + Mobile
+          </div>
+          <div class="project-title">Dumpsterr 🗑️</div>
+          <div class="project-desc">
+            A privacy-first emotional expression social media platform. Vent
+            freely, stay anonymous. Features Garbage Man invite system, Landfill
+            feed, bin management, and real-time nickname syncing.
+          </div>
+          <div class="project-tags">
+            <span class="tag">Alpine.js</span>
+            <span class="tag">Firebase</span>
+            <span class="tag">Flutter</span>
+            <span class="tag">Capstone</span>
+          </div>
+          <a
+            href="https://dumpsterr-9abda.web.app/"
+            target="_blank"
+            class="project-link"
+            >Visit Live →</a
+          >
+        </div>
+
+        <!-- STTSC E-JeepTrack -->
+        <div class="project-card">
+          <div class="project-num">02</div>
+          <div class="project-type">
+            <span class="project-status"></span>Live · PWA
+          </div>
+          <div class="project-title">STTSC E-JeepTrack</div>
+          <div class="project-desc">
+            Real-time E-Jeepney location and seat tracking PWA for STTSC. Built
+            with Mithril.js + Leaflet maps + Firebase. Fully installable on iOS
+            and Android with service worker support.
+          </div>
+          <div class="project-tags">
+            <span class="tag">Mithril.js</span>
+            <span class="tag">Leaflet</span>
+            <span class="tag">Firebase</span>
+            <span class="tag">PWA</span>
+          </div>
+          <a
+            href="https://e-jeep-tracker-96a59.web.app/"
+            target="_blank"
+            class="project-link"
+            >Visit Live →</a
+          >
+        </div>
+
+        <!-- Barangay Info System -->
+        <div class="project-card">
+          <div class="project-num">03</div>
+          <div class="project-type">
+            <span class="project-status"></span>Live · LGU System
+          </div>
+          <div class="project-title">
+            Barangay Management Information System
+          </div>
+          <div class="project-desc">
+            Full-featured barangay management system for local government units.
+            Household-based data modeling, document requests, expense tracking,
+            medicine inventory, and public-facing portals.
+          </div>
+          <div class="project-tags">
+            <span class="tag">Alpine.js</span>
+            <span class="tag">Firebase</span>
+            <span class="tag">Firestore</span>
+            <span class="tag">LGU</span>
+          </div>
+          <a
+            href="https://barangay-information-sys-e817c.web.app/"
+            target="_blank"
+            class="project-link"
+            >Visit Live →</a
+          >
+        </div>
+
+        <!-- BiblioNet 95 -->
+        <div class="project-card">
+          <div class="project-num">04</div>
+          <div class="project-type">Academic · Library System</div>
+          <div class="project-title">BiblioNet 95</div>
+          <div class="project-desc">
+            Single-file library management web app with a Windows 95 aesthetic.
+            Full borrow request tracking with tracking numbers, reservation
+            system with queue management, Firestore backend.
+          </div>
+          <div class="project-tags">
+            <span class="tag">Alpine.js</span>
+            <span class="tag">Firebase</span>
+            <span class="tag">Retro UI</span>
+            <span class="tag">Single-file</span>
+          </div>
+          <a href="#" class="project-link">View Project →</a>
+        </div>
+
+        <!-- BarangayKo -->
+        <div class="project-card">
+          <div class="project-num">05</div>
+          <div class="project-type">Capstone · Client Project</div>
+          <div class="project-title">BarangayKo</div>
+          <div class="project-desc">
+            Capstone project for Barangay San Sebastian, Hagonoy, Bulacan.
+            Resident registration, automatic age recalculation, special
+            population categories, and full name display system.
+          </div>
+          <div class="project-tags">
+            <span class="tag">Alpine.js</span>
+            <span class="tag">Firebase</span>
+            <span class="tag">Hagonoy</span>
+            <span class="tag">Client</span>
+          </div>
+          <a href="#" class="project-link">View Project →</a>
+        </div>
+
+        <!-- Portfolio -->
+        <div class="project-card">
+          <div class="project-num">06</div>
+          <div class="project-type">Personal · Portfolio</div>
+          <div class="project-title">Personal Portfolio</div>
+          <div class="project-desc">
+            Brutalist dark-themed personal portfolio with Space Mono + Syne
+            fonts, orange/amber accent, cursor animation with lerp, scroll
+            fade-ins, certificate modals, and project showcases.
+          </div>
+          <div class="project-tags">
+            <span class="tag">HTML/CSS</span>
+            <span class="tag">Vanilla JS</span>
+            <span class="tag">Brutalist</span>
+            <span class="tag">Dark</span>
+          </div>
+          <a href="#" class="project-link">View Project →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- GRAPHIC DESIGN -->
+    <section class="graphic" id="design">
+      <div class="section-header reveal">
+        <span class="section-num">04</span>
+        <h2 class="section-title">GRAPHIC DESIGN</h2>
+        <div class="section-line"></div>
+      </div>
+
+      <p
+        style="
+          font-family: &quot;Space Mono&quot;, monospace;
+          font-size: 0.8rem;
+          color: rgba(255, 255, 255, 0.55);
+          margin-bottom: 32px;
+          letter-spacing: 0.06em;
+          max-width: 600px;
+        "
+      >
+        Beyond code, I make sports edits, esports posters, product ads, UI
+        mockups, and IG carousels. All pieces below are original edits made in
+        Canva / Photoshop.
+      </p>
+
+      <div class="design-tabs">
+        <button class="design-tab active" data-tab="sports">🏀 Sports</button>
+        <button class="design-tab" data-tab="esports">🎮 Esports</button>
+        <button class="design-tab" data-tab="brands">🏷 Brands</button>
+        <button class="design-tab" data-tab="ui">📱 UI Mockups</button>
+        <button class="design-tab" data-tab="carousels">📸 Carousels</button>
+      </div>
+
+      <!-- Sports -->
+      <div class="design-gallery gallery-sports active" id="tab-sports">
+        <div
+          class="gal-item"
+          data-src="images/1.png"
+          data-title="LeBron James — 50 PTS"
+          data-type="Sports Edit"
+        >
+          <img src="images/1.png" alt="LeBron James 50 Points edit" />
+          <div class="gal-overlay">
+            <div class="gal-overlay-title">LeBron James</div>
+            <div class="gal-overlay-type">50 PTS · 10 REB · 11 AST</div>
+          </div>
+        </div>
+        <div
+          class="gal-item"
+          data-src="images/5.png"
+          data-title="OKC Thunder — Game 7"
+          data-type="NBA Promo"
+        >
+          <img src="images/5.png" alt="OKC Thunder Game 7 poster" />
+          <div class="gal-overlay">
+            <div class="gal-overlay-title">OKC Thunder</div>
+            <div class="gal-overlay-type">Game 7 Promo</div>
+          </div>
+        </div>
+        <div
+          class="gal-item"
+          data-src="images/6.png"
+          data-title="Verstappen Wins — Japanese GP"
+          data-type="F1 Edit"
+        >
+          <img src="images/6.png" alt="Max Verstappen Japanese GP" />
+          <div class="gal-overlay">
+            <div class="gal-overlay-title">Max Verstappen</div>
+            <div class="gal-overlay-type">Japanese GP · F1</div>
+          </div>
+        </div>
+        <div
+          class="gal-item"
+          data-src="images/4.png"
+          data-title="Freddie Mercury — 50th Anniversary"
+          data-type="Music Tribute"
+        >
+          <img src="images/4.png" alt="Freddie Mercury 50th Anniversary" />
+          <div class="gal-overlay">
+            <div class="gal-overlay-title">Freddie Mercury</div>
+            <div class="gal-overlay-type">50th Anniversary Tribute</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Esports -->
+      <div class="design-gallery gallery-esports" id="tab-esports">
+        <div
+          class="gal-item"
+          data-src="images/12.png"
+          data-title="T1 — Worlds 2025 Champions"
+          data-type="League of Legends"
+        >
+          <img src="images/12.png" alt="T1 Worlds 2025 Champions" />
+          <div class="gal-overlay">
+            <div class="gal-overlay-title">T1 Champions</div>
+            <div class="gal-overlay-type">Worlds 2025 · LoL</div>
+          </div>
+        </div>
+        <div
+          class="gal-item"
+          data-src="images/13.png"
+          data-title="Gumayusi — MVP"
+          data-type="LoL Worlds"
+        >
+          <img src="images/13.png" alt="Gumayusi MVP Worlds 2025" />
+          <div class="gal-overlay">
+            <div class="gal-overlay-title">Gumayusi MVP</div>
+            <div class="gal-overlay-type">Worlds 2025 · LoL</div>
+          </div>
+        </div>
+        <div
+          class="gal-item"
+          data-src="images/10.png"
+          data-title="Kelra — EWC MVP"
+          data-type="Esports"
+        >
+          <img src="images/10.png" alt="Kelra Esports World Cup MVP" />
+          <div class="gal-overlay">
+            <div class="gal-overlay-title">Kelra</div>
+            <div class="gal-overlay-type">EWC MVP · Champions</div>
+          </div>
+        </div>
+        <div
+          class="gal-item"
+          data-src="images/11.png"
+          data-title="KingKong — Champions"
+          data-type="Esports"
+        >
+          <img src="images/11.png" alt="KingKong Champions" />
+          <div class="gal-overlay">
+            <div class="gal-overlay-title">KingKong</div>
+            <div class="gal-overlay-type">Champions Edit</div>
+          </div>
+        </div>
+        <div
+          class="gal-item"
+          data-src="images/2.png"
+          data-title="Tenz — Valorant Masters MVP"
+          data-type="Valorant"
+        >
+          <img src="images/2.png" alt="Tenz Valorant Masters MVP" />
+          <div class="gal-overlay">
+            <div class="gal-overlay-title">Tenz</div>
+            <div class="gal-overlay-type">Valorant Masters MVP</div>
+          </div>
+        </div>
+        <div
+          class="gal-item"
+          style="
+            background: rgba(255, 255, 255, 0.04);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          "
+        >
+          <div style="text-align: center; padding: 24px">
+            <div
+              style="
+                font-family: &quot;Bebas Neue&quot;, sans-serif;
+                font-size: 3rem;
+                color: rgba(255, 255, 255, 0.15);
+              "
+            >
+              MORE
+            </div>
+            <div
+              style="
+                font-family: &quot;Space Mono&quot;, monospace;
+                font-size: 0.68rem;
+                color: rgba(255, 255, 255, 0.3);
+                text-transform: uppercase;
+                letter-spacing: 0.1em;
+              "
+            >
+              coming soon
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Brands -->
+      <div class="design-gallery gallery-brands" id="tab-brands">
+        <div
+          class="gal-item"
+          data-src="images/8.png"
+          data-title="Jordan 1 — Product Ad"
+          data-type="Nike / Product"
+        >
+          <img src="images/8.png" alt="Jordan 1 Product Ad" />
+          <div class="gal-overlay">
+            <div class="gal-overlay-title">Jordan 1</div>
+            <div class="gal-overlay-type">Product Ad · Nike</div>
+          </div>
+        </div>
+        <div
+          class="gal-item"
+          data-src="images/7.png"
+          data-title="Nike New Fashion"
+          data-type="Nike / Fashion"
+        >
+          <img src="images/7.png" alt="Nike New Fashion" />
+          <div class="gal-overlay">
+            <div class="gal-overlay-title">Nike New Fashion</div>
+            <div class="gal-overlay-type">Brand Ad</div>
+          </div>
+        </div>
+        <div
+          class="gal-item"
+          data-src="images/9.png"
+          data-title="FIJI Water — Japanese Market"
+          data-type="Product Ad"
+        >
+          <img src="images/9.png" alt="FIJI Water Ad" />
+          <div class="gal-overlay">
+            <div class="gal-overlay-title">FIJI Water</div>
+            <div class="gal-overlay-type">Product Ad · JP Market</div>
+          </div>
+        </div>
+        <div
+          class="gal-item"
+          data-src="images/3.png"
+          data-title="Marian Rivera — Vogue HK"
+          data-type="Magazine Cover"
+        >
+          <img src="images/3.png" alt="Marian Rivera Vogue HK" />
+          <div class="gal-overlay">
+            <div class="gal-overlay-title">Marian Rivera</div>
+            <div class="gal-overlay-type">Vogue HK Cover</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- UI Mockups -->
+      <div class="design-gallery gallery-ui" id="tab-ui">
+        <div
+          class="gal-item gal-item-wide"
+          style="aspect-ratio: unset; min-height: 400px"
+          data-src="images/Domvisuals.png"
+          data-title="UI Mockups — Foodie, iPhone 17, Nike App"
+          data-type="UI Design"
+        >
+          <img
+            src="images/Domvisuals.png"
+            alt="UI Mockups"
+            style="object-fit: contain; background: #111"
+          />
+          <div class="gal-overlay">
+            <div class="gal-overlay-title">UI Mockups</div>
+            <div class="gal-overlay-type">
+              Foodie App · iPhone 17 Pro · Nike App
+            </div>
+          </div>
+        </div>
+        <div
+          style="
+            border-left: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 16px;
+          "
+        >
+          <div
+            style="
+              font-family: &quot;Bebas Neue&quot;, sans-serif;
+              font-size: 2.2rem;
+              color: var(--yellow);
+              line-height: 1;
+            "
+          >
+            UI/UX<br />MOCKUPS
+          </div>
+          <p
+            style="
+              font-size: 0.88rem;
+              color: rgba(255, 255, 255, 0.6);
+              line-height: 1.6;
+            "
+          >
+            App mockups designed with clean component layouts. Includes food
+            delivery UI, Apple-inspired product pages, and authentication flows
+            for a Nike sneaker app.
+          </p>
+          <div
+            style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px"
+          >
+            <span
+              style="
+                font-family: &quot;Space Mono&quot;, monospace;
+                font-size: 0.62rem;
+                text-transform: uppercase;
+                letter-spacing: 0.08em;
+                border: 1px solid rgba(255, 229, 0, 0.5);
+                padding: 4px 10px;
+                color: var(--yellow);
+              "
+              >Figma</span
+            >
+            <span
+              style="
+                font-family: &quot;Space Mono&quot;, monospace;
+                font-size: 0.62rem;
+                text-transform: uppercase;
+                letter-spacing: 0.08em;
+                border: 1px solid rgba(255, 229, 0, 0.5);
+                padding: 4px 10px;
+                color: var(--yellow);
+              "
+              >Mobile UI</span
+            >
+            <span
+              style="
+                font-family: &quot;Space Mono&quot;, monospace;
+                font-size: 0.62rem;
+                text-transform: uppercase;
+                letter-spacing: 0.08em;
+                border: 1px solid rgba(255, 229, 0, 0.5);
+                padding: 4px 10px;
+                color: var(--yellow);
+              "
+              >Prototype</span
+            >
+          </div>
+        </div>
+      </div>
+
+      <!-- Carousels -->
+      <div class="design-gallery gallery-carousels" id="tab-carousels">
+        <div
+          class="gal-item gal-item-wide"
+          style="aspect-ratio: unset; min-height: 300px"
+          data-src="images/Domvisuals (1).png"
+          data-title="IG Carousels — Angelfish Breeder & Jordan 1 Sale"
+          data-type="Social Media"
+        >
+          <img
+            src="images/Domvisuals (1).png"
+            alt="IG Carousels"
+            style="object-fit: contain; background: #111"
+          />
+          <div class="gal-overlay">
+            <div class="gal-overlay-title">IG Carousels</div>
+            <div class="gal-overlay-type">
+              Angelfish Breeder · Jordan 1 Big Sale
+            </div>
+          </div>
+        </div>
+        <div
+          style="
+            border-left: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 16px;
+          "
+        >
+          <div
+            style="
+              font-family: &quot;Bebas Neue&quot;, sans-serif;
+              font-size: 2.2rem;
+              color: var(--yellow);
+              line-height: 1;
+            "
+          >
+            INSTAGRAM<br />CAROUSELS
+          </div>
+          <p
+            style="
+              font-size: 0.88rem;
+              color: rgba(255, 255, 255, 0.6);
+              line-height: 1.6;
+            "
+          >
+            Scroll-stopping social media graphics for local businesses and
+            brands. Includes an Angelfish Breeder from Calumpit, Bulacan and a
+            Jordan 1 Big Sale campaign.
+          </p>
+          <div
+            style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px"
+          >
+            <span
+              style="
+                font-family: &quot;Space Mono&quot;, monospace;
+                font-size: 0.62rem;
+                text-transform: uppercase;
+                letter-spacing: 0.08em;
+                border: 1px solid rgba(255, 229, 0, 0.5);
+                padding: 4px 10px;
+                color: var(--yellow);
+              "
+              >Instagram</span
+            >
+            <span
+              style="
+                font-family: &quot;Space Mono&quot;, monospace;
+                font-size: 0.62rem;
+                text-transform: uppercase;
+                letter-spacing: 0.08em;
+                border: 1px solid rgba(255, 229, 0, 0.5);
+                padding: 4px 10px;
+                color: var(--yellow);
+              "
+              >Social Media</span
+            >
+            <span
+              style="
+                font-family: &quot;Space Mono&quot;, monospace;
+                font-size: 0.62rem;
+                text-transform: uppercase;
+                letter-spacing: 0.08em;
+                border: 1px solid rgba(255, 229, 0, 0.5);
+                padding: 4px 10px;
+                color: var(--yellow);
+              "
+              >SMMA</span
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CERTIFICATES -->
+    <section class="certs-section" id="certificates">
+      <div class="certs-inner reveal">
+        <div class="section-header">
+          <span class="section-num">06</span>
+          <h2 class="section-title">CERTIFICATES</h2>
+          <div class="section-line"></div>
+        </div>
+        <p class="certs-sub">
+          Earned through rigorous coursework and hands-on training. Click any
+          certificate to view it.
+        </p>
+        <div class="certs-grid">
+          <!-- Oracle Certificate -->
+          <div
+            class="cert-card"
+            onclick="
+              openCert(
+                'javacertificate.pdf',
+                'Oracle Academy — Java Fundamentals',
+              )
+            "
+          >
+            <div class="cert-logo-block cert-logo-oracle">
+              <span class="cert-logo-text">ORACLE</span>
+              <span class="cert-logo-sub">Academy</span>
+            </div>
+            <div class="cert-body">
+              <div class="cert-issuer">Oracle Academy</div>
+              <div class="cert-title">Java Fundamentals</div>
+              <div class="cert-meta">
+                <span class="cert-date">📅 June 19, 2024</span>
+                <span class="cert-type">Award of Course Completion</span>
+              </div>
+              <p class="cert-desc">
+                Satisfactory completion of all coursework in Java Fundamentals,
+                issued by Oracle Academy Instructor Beronika Peña at STI College
+                Philippines.
+              </p>
+              <div class="cert-cta">View Certificate →</div>
+            </div>
+          </div>
+
+          <!-- SAP Certificate -->
+          <div
+            class="cert-card"
+            onclick="
+              openCert(
+                'sapcertificate.pdf',
+                'SAP University Alliances — S/4HANA',
+              )
+            "
+          >
+            <div class="cert-logo-block cert-logo-sap">
+              <span class="cert-logo-text">SAP</span>
+              <span class="cert-logo-sub">University Alliances</span>
+            </div>
+            <div class="cert-body">
+              <div class="cert-issuer">SAP University Alliances</div>
+              <div class="cert-title">
+                SAP S/4HANA — SD, MM, PP, FI, CO Modules
+              </div>
+              <div class="cert-meta">
+                <span class="cert-date">📅 Jan 20 – Jun 7, 2025</span>
+                <span class="cert-type">Certificate of Participation</span>
+              </div>
+              <p class="cert-desc">
+                Participated in SD, MM, PP, FI, and CO modules of SAP S/4HANA
+                using Global Bike, conducted by STI College Philippines in
+                partnership with SAP University Alliances.
+              </p>
+              <div class="cert-cta">View Certificate →</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CERT MODAL -->
+    <div class="cert-modal" id="certModal">
+      <div class="cert-modal-backdrop" onclick="closeCert()"></div>
+      <div class="cert-modal-box">
+        <div class="cert-modal-header">
+          <span class="cert-modal-title" id="certModalTitle"></span>
+          <button class="cert-modal-close" onclick="closeCert()">✕</button>
+        </div>
+        <iframe
+          class="cert-modal-frame"
+          id="certModalFrame"
+          src=""
+          title="Certificate"
+        ></iframe>
+        <div class="cert-modal-footer">
+          <a
+            class="btn btn-primary"
+            id="certDownloadBtn"
+            href=""
+            download
+            style="font-size: 0.72rem; padding: 10px 20px"
+            >⬇ Download PDF</a
+          >
+        </div>
+      </div>
+    </div>
+
+    <!-- CONTACT -->
+    <section class="contact" id="contact">
+      <div class="contact-left reveal">
+        <div class="section-header">
+          <span class="section-num">06</span>
+          <h2 class="section-title">LET'S<br />WORK</h2>
+          <div class="section-line"></div>
+        </div>
+        <p class="contact-big">
+          Got a project? I'm open for freelance work and collabs.
+        </p>
+        <div class="contact-links">
+          <a href="mailto:dominicdechut@gmail.com" class="contact-link">
+            <span class="contact-icon">📧</span>
+            <span>Email Me</span>
+          </a>
+          <a href="https://github.com/" target="_blank" class="contact-link">
+            <span class="contact-icon">⌨</span>
+            <span>GitHub</span>
+          </a>
+          <a
+            href="https://www.facebook.com/dominic.dejesus.56"
+            target="_blank"
+            class="contact-link"
+          >
+            <span class="contact-icon">📘</span>
+            <span>Facebook — Dominic DeJesus</span>
+          </a>
+          <a href="#" class="contact-link">
+            <span class="contact-icon">📍</span>
+            <span>Calumpit / Hagonoy, Bulacan, PH</span>
+          </a>
+        </div>
+      </div>
+      <div class="contact-right reveal">
+        <div class="section-header">
+          <span class="section-num">→</span>
+          <h2 class="section-title">SEND A<br />MESSAGE</h2>
+          <div class="section-line"></div>
+        </div>
+        <div class="contact-form">
+          <div class="form-group">
+            <label class="form-label" for="contactName">Your Name</label>
+            <input
+              id="contactName"
+              type="text"
+              class="form-input"
+              placeholder="e.g. Juan dela Cruz"
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="contactEmail">Email</label>
+            <input
+              id="contactEmail"
+              type="email"
+              class="form-input"
+              placeholder="hello@example.com"
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="contactMessage">Message</label>
+            <textarea
+              id="contactMessage"
+              class="form-textarea"
+              placeholder="Tell me about your project..."
+            ></textarea>
+          </div>
+          <button
+            id="sendMsgBtn"
+            class="btn btn-primary"
+            style="width: 100%; justify-content: center; font-size: 0.8rem"
+            onclick="handleSendMessage()"
+          >
+            Send Message →
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- TOAST -->
+    <div
+      id="toast"
+      style="
+        position: fixed;
+        bottom: 32px;
+        right: 32px;
+        z-index: 99999;
+        background: var(--black);
+        color: var(--yellow);
+        font-family: &quot;Space Mono&quot;, monospace;
+        font-size: 0.78rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        padding: 16px 24px;
+        border: 3px solid var(--yellow);
+        box-shadow: 6px 6px 0 var(--yellow);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        opacity: 0;
+        transform: translateY(20px);
+        transition:
+          opacity 0.3s,
+          transform 0.3s;
+        pointer-events: none;
+      "
+    >
+      <span id="toastIcon">✓</span>
+      <span id="toastMsg">Opening your email client...</span>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="footer-logo">DOM.DEV</div>
+      <div class="footer-copy">
+        Built with <span class="footer-heart">♥</span> in the Philippines · 2026
+        · Dominic De Jesus
+      </div>
+      <div
+        style="
+          font-family: &quot;Space Mono&quot;, monospace;
+          font-size: 0.65rem;
+          color: rgba(255, 255, 255, 0.3);
+          text-transform: uppercase;
+          letter-spacing: 0.1em;
+        "
+      >
+        HTML | CSS | JavaScript
+      </div>
+    </footer>
+
+    <script>
+      // ── CURSOR ──
+      const cursor = document.getElementById("cursor");
+      document.addEventListener("mousemove", (e) => {
+        cursor.style.left = e.clientX + "px";
+        cursor.style.top = e.clientY + "px";
+      });
+      document
+        .querySelectorAll("a, button, .gal-item, .badge, .project-card")
+        .forEach((el) => {
+          el.addEventListener("mouseenter", () => cursor.classList.add("big"));
+          el.addEventListener("mouseleave", () =>
+            cursor.classList.remove("big"),
+          );
+        });
+
+      // ── DESIGN TABS ──
+      const tabs = document.querySelectorAll(".design-tab");
+      const galleries = document.querySelectorAll(".design-gallery");
+      tabs.forEach((tab) => {
+        tab.addEventListener("click", () => {
+          tabs.forEach((t) => t.classList.remove("active"));
+          galleries.forEach((g) => g.classList.remove("active"));
+          tab.classList.add("active");
+          const target = document.getElementById("tab-" + tab.dataset.tab);
+          if (target) target.classList.add("active");
+        });
+      });
+
+      // ── LIGHTBOX ──
+      const lightbox = document.getElementById("lightbox");
+      const lightboxImg = document.getElementById("lightboxImg");
+      const lightboxClose = document.getElementById("lightboxClose");
+
+      document.querySelectorAll(".gal-item[data-src]").forEach((item) => {
+        item.addEventListener("click", () => {
+          lightboxImg.src = item.dataset.src;
+          lightboxImg.alt = item.dataset.title || "";
+          lightbox.classList.add("open");
+        });
+      });
+      lightboxClose.addEventListener("click", () =>
+        lightbox.classList.remove("open"),
+      );
+      lightbox.addEventListener("click", (e) => {
+        if (e.target === lightbox) lightbox.classList.remove("open");
+      });
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") lightbox.classList.remove("open");
+      });
+
+      // ── SCROLL REVEAL ──
+      const revealEls = document.querySelectorAll(".reveal");
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("visible");
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.1 },
+      );
+      revealEls.forEach((el) => observer.observe(el));
+
+      // ── CERT MODAL ──
+      const certModal = document.getElementById("certModal");
+      const certModalFrame = document.getElementById("certModalFrame");
+      const certModalTitle = document.getElementById("certModalTitle");
+      const certDlBtn = document.getElementById("certDownloadBtn");
+
+      window.openCert = function (pdfSrc, title) {
+        certModalFrame.src = pdfSrc;
+        certModalTitle.textContent = title;
+        certDlBtn.href = pdfSrc;
+        certDlBtn.download = pdfSrc;
+        certModal.classList.add("open");
+        document.body.style.overflow = "hidden";
+      };
+
+      window.closeCert = function () {
+        certModal.classList.remove("open");
+        certModalFrame.src = "";
+        document.body.style.overflow = "";
+      };
+
+      document
+        .getElementById("certModal")
+        .querySelector(".cert-modal-backdrop")
+        .addEventListener("click", closeCert);
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && certModal.classList.contains("open"))
+          closeCert();
+      });
+
+      // ── TOAST ──
+      function showToast(msg, icon = "✓", isError = false) {
+        const toast = document.getElementById("toast");
+        document.getElementById("toastMsg").textContent = msg;
+        document.getElementById("toastIcon").textContent = icon;
+        toast.style.borderColor = isError ? "var(--pink)" : "var(--yellow)";
+        toast.style.color = isError ? "var(--pink)" : "var(--yellow)";
+        toast.style.boxShadow = isError
+          ? "6px 6px 0 var(--pink)"
+          : "6px 6px 0 var(--yellow)";
+        toast.style.opacity = "1";
+        toast.style.transform = "translateY(0)";
+        clearTimeout(toast._timer);
+        toast._timer = setTimeout(() => {
+          toast.style.opacity = "0";
+          toast.style.transform = "translateY(20px)";
+        }, 3500);
+      }
+
+      // ── EMAILJS INIT ──
+      emailjs.init("4k3v4qLlfDEn0bqZ1");
+
+      // ── CONTACT FORM — SEND MESSAGE ──
+      window.handleSendMessage = function () {
+        const nameEl = document.getElementById("contactName");
+        const emailEl = document.getElementById("contactEmail");
+        const msgEl = document.getElementById("contactMessage");
+        const btn = document.getElementById("sendMsgBtn");
+
+        const name = nameEl.value.trim();
+        const email = emailEl.value.trim();
+        const msg = msgEl.value.trim();
+
+        // Reset borders
+        [nameEl, emailEl, msgEl].forEach((el) => (el.style.borderColor = ""));
+
+        let errors = [];
+        if (!name) {
+          nameEl.style.borderColor = "var(--pink)";
+          errors.push("name");
+        }
+        if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+          emailEl.style.borderColor = "var(--pink)";
+          errors.push("email");
+        }
+        if (!msg) {
+          msgEl.style.borderColor = "var(--pink)";
+          errors.push("message");
+        }
+
+        if (errors.length) {
+          showToast("Please fill in: " + errors.join(", "), "✕", true);
+          return;
+        }
+
+        // Disable button while sending
+        btn.textContent = "Sending...";
+        btn.style.opacity = "0.6";
+        btn.disabled = true;
+
+        emailjs
+          .send("service_r0tity4", "template_7xu71qj", {
+            from_name: name,
+            from_email: email,
+            message: msg,
+            subject: "Portfolio Inquiry from " + name,
+          })
+          .then(() => {
+            showToast("Message sent! I'll get back to you soon.", "✓");
+            nameEl.value = "";
+            emailEl.value = "";
+            msgEl.value = "";
+            [nameEl, emailEl, msgEl].forEach(
+              (el) => (el.style.borderColor = ""),
+            );
+          })
+          .catch((err) => {
+            console.error("EmailJS error:", err);
+            showToast("Failed to send. Please email me directly.", "✕", true);
+          })
+          .finally(() => {
+            btn.textContent = "Send Message →";
+            btn.style.opacity = "1";
+            btn.disabled = false;
+          });
+      };
+
+      // ── EMAIL ME LINK — visual feedback ──
+      document.querySelectorAll('a[href^="mailto:"]').forEach((link) => {
+        link.addEventListener("click", () => {
+          showToast("Opening email client...", "📧");
+        });
+      });
+
+      // Make cert cards trigger cursor big state
+      document.querySelectorAll(".cert-card").forEach((el) => {
+        el.addEventListener("mouseenter", () => cursor.classList.add("big"));
+        el.addEventListener("mouseleave", () => cursor.classList.remove("big"));
+      });
+    </script>
+  </body>
+</html>
